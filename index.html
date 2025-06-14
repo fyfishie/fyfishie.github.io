@@ -93,20 +93,20 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h1 id="AFF3CT简介"><a href="#AFF3CT简介" class="headerlink" title="AFF3CT简介"></a>AFF3CT简介</h1><p>AFF3CT（Awesome Forward Frror Correction Tools）是一个开源的前向纠错（FEC）工具箱，专为通信系统中的信道编码设计与仿真而开发。它由法国波尔多理工学院（Bordeaux INP）的研究团队创建，旨在支持高效的信道编解码算法研究、性能评估及实际应用。</p>
+        <h2 id="AFF3CT简介"><a href="#AFF3CT简介" class="headerlink" title="AFF3CT简介"></a>AFF3CT简介</h2><p>AFF3CT（Awesome Forward Frror Correction Tools）是一个开源的前向纠错（FEC）工具箱，专为通信系统中的信道编码设计与仿真而开发。它由法国波尔多理工学院（Bordeaux INP）的研究团队创建，旨在支持高效的信道编解码算法研究、性能评估及实际应用。</p>
 <p><a target="_blank" rel="noopener" href="https://github.com/aff3ct/aff3ct">AFF3CT工具github主页</a></p>
 <p><a target="_blank" rel="noopener" href="https://aff3ct.readthedocs.io/en/latest/">AFF3CT文档</a></p>
 <p>AFF3CT内包含各种各样的编码方案，我需要将它的核心功能加到自己的程序里。</p>
 <p>一开始不知道能编译成静态链接库，就打算通过研究源码的方式把核心功能扣出来…（累死了我也没成功，这个库写的很好，但是涉及到的模板参数，模板的特化，编译参数，配置，继承等等太多了，一时半会儿扣不出来）</p>
 <p>后来我发现它可以编译成静态链接库，但是使用过程还是有一些曲折的，网络上也找不到太多资料，全靠我的一身正气搞出来了 :)</p>
 <p>下面介绍一下如何编译并将AFF3CT集成到自己的程序里。</p>
-<h1 id="自己研究也行"><a href="#自己研究也行" class="headerlink" title="自己研究也行"></a>自己研究也行</h1><p><a target="_blank" rel="noopener" href="https://github.com/aff3ct/my/_project/_with/_aff3ct">https://github.com/aff3ct/my\_project\_with\_aff3ct</a></p>
+<h2 id="自己研究也行"><a href="#自己研究也行" class="headerlink" title="自己研究也行"></a>自己研究也行</h2><p><a target="_blank" rel="noopener" href="https://github.com/aff3ct/my/_project/_with/_aff3ct">https://github.com/aff3ct/my\_project\_with\_aff3ct</a></p>
 <p>结合这个链接里的examples自己研究也行（）</p>
 <p>可以return了哈哈哈哈哈 :)</p>
-<h1 id="那接着看吧"><a href="#那接着看吧" class="headerlink" title="那接着看吧"></a>那接着看吧</h1><h2 id="AFF3CT静态连接库编译"><a href="#AFF3CT静态连接库编译" class="headerlink" title="AFF3CT静态连接库编译"></a>AFF3CT静态连接库编译</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 首先下载AFF3CT</span></span><br><span class="line">https://github.com/aff3ct/aff3ct.git</span><br><span class="line"><span class="built_in">cd</span> aff3ct</span><br><span class="line"></span><br><span class="line"><span class="comment"># 编写文档的这天，AFF3CT的默认分支是develop分支，应该是有新的特性没有完全编写完成，</span></span><br><span class="line"><span class="comment"># 导致编译成静态连接库的CMake阶段会出现错误</span></span><br><span class="line">git checkout master</span><br><span class="line"></span><br><span class="line"><span class="comment"># 下载依赖的其它模块</span></span><br><span class="line">git submodule update --init --recursive</span><br><span class="line"></span><br><span class="line"><span class="built_in">mkdir</span> build</span><br><span class="line"><span class="built_in">cd</span> build</span><br><span class="line"></span><br><span class="line"><span class="comment"># 生成makefile，这里关闭了exe的生成，打开了静态库和动态库的编译</span></span><br><span class="line">cmake .. -G<span class="string">&quot;Unix Makefiles&quot;</span> -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_FLAGS=<span class="string">&quot;-funroll-loops -march=native&quot;</span> -DAFF3CT_COMPILE_EXE=<span class="string">&quot;OFF&quot;</span> -DAFF3CT_COMPILE_STATIC_LIB=<span class="string">&quot;ON&quot;</span> -DAFF3CT_COMPILE_SHARED_LIB=<span class="string">&quot;ON&quot;</span></span><br><span class="line"></span><br><span class="line">make -j8</span><br><span class="line"><span class="built_in">sudo</span> make install</span><br><span class="line"><span class="built_in">sudo</span> ldconfig</span><br></pre></td></tr></table></figure>
+<h2 id="那接着看吧"><a href="#那接着看吧" class="headerlink" title="那接着看吧"></a>那接着看吧</h2><h3 id="AFF3CT静态连接库编译"><a href="#AFF3CT静态连接库编译" class="headerlink" title="AFF3CT静态连接库编译"></a>AFF3CT静态连接库编译</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 首先下载AFF3CT</span></span><br><span class="line">https://github.com/aff3ct/aff3ct.git</span><br><span class="line"><span class="built_in">cd</span> aff3ct</span><br><span class="line"></span><br><span class="line"><span class="comment"># 编写文档的这天，AFF3CT的默认分支是develop分支，应该是有新的特性没有完全编写完成，</span></span><br><span class="line"><span class="comment"># 导致编译成静态连接库的CMake阶段会出现错误</span></span><br><span class="line">git checkout master</span><br><span class="line"></span><br><span class="line"><span class="comment"># 下载依赖的其它模块</span></span><br><span class="line">git submodule update --init --recursive</span><br><span class="line"></span><br><span class="line"><span class="built_in">mkdir</span> build</span><br><span class="line"><span class="built_in">cd</span> build</span><br><span class="line"></span><br><span class="line"><span class="comment"># 生成makefile，这里关闭了exe的生成，打开了静态库和动态库的编译</span></span><br><span class="line">cmake .. -G<span class="string">&quot;Unix Makefiles&quot;</span> -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_FLAGS=<span class="string">&quot;-funroll-loops -march=native&quot;</span> -DAFF3CT_COMPILE_EXE=<span class="string">&quot;OFF&quot;</span> -DAFF3CT_COMPILE_STATIC_LIB=<span class="string">&quot;ON&quot;</span> -DAFF3CT_COMPILE_SHARED_LIB=<span class="string">&quot;ON&quot;</span></span><br><span class="line"></span><br><span class="line">make -j8</span><br><span class="line"><span class="built_in">sudo</span> make install</span><br><span class="line"><span class="built_in">sudo</span> ldconfig</span><br></pre></td></tr></table></figure>
 
 <p>至此就完成了AFF3CT静态链接库编译和安装，当然动态链接库也顺便完成了，不过我这次不用，所以就没继续研究。后面都是对静态链接库的使用说明。</p>
-<h2 id="搭建自己的项目"><a href="#搭建自己的项目" class="headerlink" title="搭建自己的项目"></a>搭建自己的项目</h2><p>新建四个文件:</p>
+<h3 id="搭建自己的项目"><a href="#搭建自己的项目" class="headerlink" title="搭建自己的项目"></a>搭建自己的项目</h3><p>新建四个文件:</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">CMakeLists.txt</span><br><span class="line">aff.h</span><br><span class="line">aff.cpp</span><br><span class="line">main.cpp</span><br></pre></td></tr></table></figure>
 
 <p>内容分别如下</p>
@@ -127,7 +127,7 @@
 
 <p>我的输出是这样的，程序运行成功了</p>
 <p><img src="/../images/aff.png"></p>
-<h2 id="代码细节"><a href="#代码细节" class="headerlink" title="代码细节"></a>代码细节</h2><p>在上面的aff.cpp代码里我写成注释了 :)</p>
+<h3 id="代码细节"><a href="#代码细节" class="headerlink" title="代码细节"></a>代码细节</h3><p>在上面的aff.cpp代码里我写成注释了 :)</p>
 <p>关于AFF3CT库的具体使用方式请看其他文章，或者可以参考AFF3CT的官方<a target="_blank" rel="noopener" href="https://github.com/aff3ct/my_project_with_aff3ct">examples</a></p>
 <p>如有错误敬请指出，转载请注明出处。</p>
 <p>Good Luck!</p>
@@ -135,7 +135,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/06/14/use-of-AFF3CT/" data-id="cmbvw4afm00016zhi2liq9pfv" data-title="use of AFF3CT" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/06/14/use-of-AFF3CT/" data-id="cmbvw6jpo0001vnhi0xbq8kl7" data-title="use of AFF3CT" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -207,7 +207,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2023/06/20/thread-safety-of-gorm/" data-id="cmbvw4afk00006zhi2q482yxa" data-title="thread safety of gorm" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2023/06/20/thread-safety-of-gorm/" data-id="cmbvw6jpm0000vnhifnm76xi7" data-title="thread safety of gorm" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       

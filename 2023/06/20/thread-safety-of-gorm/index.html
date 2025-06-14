@@ -13,12 +13,12 @@
 <meta property="og:site_name" content="Echocean blog">
 <meta property="og:description" content="gorm的并发安全问题  最近负责一个小项目的后端，需要用到sql数据库，本着能偷懒就绝不多写一行代码的精神，我决定用gorm帮助我偷懒。由于代码逻辑十分简单所以entity、dao等等各层写的不亦乐乎，但是多次高并发程序的开发经历告诉我事情没有这么简单，果然gorm并没有说自己对多线程操作保证安全… 下面是gorm关于并发安全的叙述https:&#x2F;&#x2F;gorm.io&#x2F;zh_CN&#x2F;docs&#x2F;metho">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://example.com/images/1.png">
+<meta property="og:image" content="http://example.com/images/gorm.png">
 <meta property="article:published_time" content="2023-06-20T02:20:44.000Z">
-<meta property="article:modified_time" content="2025-06-14T03:15:40.891Z">
+<meta property="article:modified_time" content="2025-06-14T07:02:42.682Z">
 <meta property="article:author" content="Echocean">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/images/1.png">
+<meta name="twitter:image" content="http://example.com/images/gorm.png">
   
     <link rel="alternate" href="/atom.xml" title="Echocean blog" type="application/atom+xml">
   
@@ -98,7 +98,7 @@
     <div class="e-content article-entry" itemprop="articleBody">
       
         <h2 id="gorm的并发安全问题"><a href="#gorm的并发安全问题" class="headerlink" title="gorm的并发安全问题"></a>gorm的并发安全问题</h2><p>  最近负责一个小项目的后端，需要用到sql数据库，本着能偷懒就绝不多写一行代码的精神，我决定用gorm帮助我偷懒。<br>由于代码逻辑十分简单所以entity、dao等等各层写的不亦乐乎，但是多次高并发程序的开发经历告诉我事情没有这么简单，果然gorm并没有说自己对多线程操作保证安全…</p>
-<p><img src="/../images/1.png"><br>下面是gorm关于并发安全的叙述<br><a target="_blank" rel="noopener" href="https://gorm.io/zh_CN/docs/method_chaining.html">https://gorm.io/zh_CN/docs/method_chaining.html</a></p>
+<p><img src="/../images/gorm.png"><br>下面是gorm关于并发安全的叙述<br><a target="_blank" rel="noopener" href="https://gorm.io/zh_CN/docs/method_chaining.html">https://gorm.io/zh_CN/docs/method_chaining.html</a></p>
 <h2 id="链式方法"><a href="#链式方法" class="headerlink" title="链式方法"></a>链式方法</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">链式方法是将 Clauses 修改或添加到当前 Statement 的方法，例如：</span><br><span class="line"></span><br><span class="line">Where, Select, Omit, Joins, Scopes, Preload, Raw</span><br></pre></td></tr></table></figure>
 
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">终结（方法） 是会立即执行注册回调的方法，然后生成并执行 SQL，比如这些方法：</span><br><span class="line"></span><br><span class="line">Create, First, Find, Take, Save, Update, Delete, Scan, Row, Rows</span><br></pre></td></tr></table></figure>
@@ -135,7 +135,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2023/06/20/thread-safety-of-gorm/" data-id="cmbvsq0pj0000lyhi18pec49d" data-title="thread safety of gorm" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2023/06/20/thread-safety-of-gorm/" data-id="cmbvw4afk00006zhi2q482yxa" data-title="thread safety of gorm" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
